@@ -1,0 +1,4 @@
+C:\Users\Jad Isaac\source\repos\MadScientist\x64\Debug\MadScientist.exe
+C:\Users\Jad Isaac\source\repos\MadScientist\x64\Debug\MadScientist.pdb
+C:\Users\Jad Isaac\Desktop\Comp CPP\MadScientist\x64\Debug\MadScientist.exe
+C:\Users\Jad Isaac\Desktop\Comp CPP\MadScientist\x64\Debug\MadScientist.pdb
