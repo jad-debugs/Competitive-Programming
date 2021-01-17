@@ -1,31 +1,27 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <set>
+#include <algorithm>
 using namespace std;
 
 int main()
 {
+    multiset<int> ms;
     int n, m; cin >> n >> m;
-    
-    int ppl[m];
-    priority_queue<int> tickets;
-
+   
     for(int i = 0; i < n; i++) {
-        int tmp; cin >> tmp;
-        tickets.push(tmp);
+        int a; cin >> a;
+        ms.insert(a);
     }
-
     for(int i = 0; i < m; i++) {
-        cin >> ppl[i];
-    }
+        int t; cin >> t;
+        auto p = ms.upper_bound(t);
 
-    for(int x : ppl) {
-        int *p = tickets.lower_bound(x);
-        if(*p == x) {
-            cout << x << "\n";
-            tickets.erase(p);
-        }
-        else if(p == &*tickets) cout << -1 << "\n";
-        else cout << *(--p) << "\n";
+        if(p == ms.begin())
+            cout << "-1\n";
+        else {
+            cout << *(--p) << "\n";
+            ms.erase(p);
+        }        
     }
-
-    return 0 ;
+    
 }
