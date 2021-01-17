@@ -23,7 +23,7 @@ int main()
             cout << x << "\n";
             tickets.erase(p);
         }
-        else if(p == tickets.begin()) cout << -1 << "\n";
+        else if(p == &*tickets) cout << -1 << "\n";
         else cout << *(--p) << "\n";
     }
 
