@@ -2,48 +2,84 @@
 using namespace std;
 
 struct sellMilk {
-    int cowsOpen, price;
+    int f, s;
 };
 
-bool cmpInt(int a, int b) {
+bool cmpInt(int a, int b)
+{
     return a > b;
+}
+
+bool cmpSM(sellMilk a, sellMilk b)
+{
+    if(a.s == b.s) return a.f > b.f;
+    return a.s > b.s;
+}
+
+void setIO(string name = "") {
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    
+    if ((int)(name).size()) {
+        freopen((name+".in").c_str(), "r", stdin);
+        freopen((name+".out").c_str(), "w", stdout);
+    }
 }
 
 int main()
 {
+    setIO("rental");
     int n, m, r;
     cin >> n >> m >> r;
 
-    int cows[n], prices[n] = {0};
-    vector<int> milkSales;
+    int cows[n], prices[r];
+    sellMilk milkSales[m];
 
     for(int i = 0; i < n; i++)
         cin >> cows[i];
 
     for(int i = 0; i < m; i++) {
         int a, b; cin >> a >> b;
-        milkSales.resize(b, a); 
+        milkSales[i] = {a, b};
     }
 
     for(int i = 0; i < r; i++)
         cin >> prices[i];
 
-    sort(cows, cows+n);
-    sort(milkSales.begin(), milkSales.end(), cmpInt);
+    sort(cows, cows + n, cmpInt);
     sort(prices, prices + r, cmpInt);
+    sort(milkSales, milkSales + m, cmpSM);
 
-    int ans = 0;
 
-    int curPlace = 0;
-    for(int i = n-1; i >= 0; i--) {
-        int milkSell = 0;
-        int org = curPlace;
-        for(int j = curPlace; j < org + cows[i]; j++) {
-            curPlace = j;
-            milkSell += milkSales[j];
+    int curmilk = 0;
+    long long ans = 0;
+    for(int a = 0; a < n; a++) {
+        int cow = cows[a];
+        long long mc = 0, sc = 0;
+        // sell
+        while(true) {
+            int f = milkSales[curmilk].f;
+            int s = milkSales[curmilk].s;
+            if (cow < f) {milkSales[curmilk].f -= cow; mc += cow*s; break;}
+
+            else if (cow > f) {
+                cow -= f;
+                curmilk++;
+                mc += f*s;
+            }
+            else if (cow == f) {curmilk++; mc += f*s; break;}
         }
-        ans += max(prices[i], milkSell);
+        // price
+        if(n-a <= r) {sc = prices[n-a-1];}
+
+        bool done = false;
+
+        if(sc >= mc) {
+            done = true;
+            for(int b = 0; b <= n-a-1; b++) ans += prices[b];
+            break;
+        }
+        if(!done) ans += mc;
     }
-    cout << ans;
+    cout << ans; 
     return 0;
 }
