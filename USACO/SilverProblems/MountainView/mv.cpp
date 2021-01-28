@@ -10,46 +10,37 @@ void setIO(string name = "") {
     }
 }
 
-struct Peak {
+struct mountain {
     int x, y;
-
-    bool blocked(Peak o) {
-        if (x < o.x) {
-            int diff = o.x - x;
-            if(y + diff > o.y)
-                return false;
-        }
-        else if(x > o.x) {
-            int diff = x - o.x;
-            if(y + diff > o.y)
-                return false;
-        }
-        return true;
-    }
 };
 
-bool cmp(Peak hi, Peak other) {
-        if(other.x != hi.x) return hi.y < other.y;
-        return hi.x < other.x;
+bool cmpM(mountain one, mountain two)
+{
+    if(one.x - one.y == two.x - two.y)
+       return one.x + one.y > two.x + two.y;
+    return one.x - one.y < two.x - two.y;
+
 }
 
-int main() {
+int main()
+{
     setIO("mountains");
-    int n; cin >> n; 
+    int n; cin >> n;
 
-    Peak arr[n];
+    mountain arr[n];
 
     for(int i = 0; i < n; i++) {
         cin >> arr[i].x >> arr[i].y;
     }
 
-    sort(arr, arr+n, cmp);
-    
-    int ans = n;
+    sort(arr, arr+n, cmpM);
 
-    for(int i = 0; i < n; i++) {
-        for(int j = n-1; j > i; j--) {
-            ans -= arr[i].blocked(arr[j]);         
+    int right = 0, ans = 0;
+
+    for(auto mv: arr) {
+        if(mv.x + mv.y > right) {
+            ans++;
+            right = mv.x + mv.y;
         }
     }
     cout << ans;
