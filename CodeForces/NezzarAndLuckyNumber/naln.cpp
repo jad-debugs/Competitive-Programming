@@ -16,7 +16,7 @@ int main()
             cin >> arr[i];
             string ans = "NO\n";
             for(int j = 1; j <= 1000; j++) {
-                if((d*j <= arr[i]) && ((arr[i] - d*j)%10 == 0)) {
+                if((d*j <= arr[i]) && (((arr[i] - d*j)%10 == 0) || ((arr[i] - d*j)%100)%10 == d ) ) {
                     ans = "YES\n";
                     break;
                 }
