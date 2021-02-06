@@ -1,7 +1,6 @@
 /*ID: jadDebugs
 TASK: -----
 LANG: C++                 
-Testing Github
 */
 #include <bits/stdc++.h>
 using namespace std;
