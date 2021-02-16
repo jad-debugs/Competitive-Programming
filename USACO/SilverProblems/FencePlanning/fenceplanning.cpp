@@ -10,13 +10,11 @@ using namespace std;
 
 void setIO(string name = "") {
     ios_base::sync_with_stdio(0); cin.tie(0);
-    
-    
+
     if ((int)(name).size()) {
         freopen((name+".in").c_str(), "r", stdin);
         freopen((name+".out").c_str(), "w", stdout);
     }
-    
 }
 
 const int hi = 2e5;
@@ -51,7 +49,7 @@ void cc() {
     for(int v = 0; v < n+1; v++) {
         if(!visited[v]) {
             cnt++;
-            ans[cnt] = {hi, hi, 0, 0};
+            ans[cnt] = {(int)1e9, (int)1e9, 0, 0};
             dfs(v);
         }
     }
@@ -69,7 +67,7 @@ int main()
         int a, b; cin >> a >> b;
         coor.push_back({a, b});
     }
-    
+
 
     for(int i = 0; i < m; i++) {
         int a, b; cin >> a >> b;
@@ -79,8 +77,8 @@ int main()
 
     cc();
 
-    int res = hi;
-    
+    int res = (int)1e10;
+
     for(pair<int, cow> m: ans) {
         if(m.second.x1 == 0 && m.second.x1 == m.second.x2 && m.second.x2 == m.second.y1 && m.second.y1 == m.second.y2)
             continue;
