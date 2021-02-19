@@ -53,14 +53,6 @@ int main()
         int a, b; cin >> a >> b;
         graph[a-1].push_back(b-1);
         graph[b-1].push_back(a-1);
-        if(ig == 'D') {
-            if(diff.count(a) || diff.count(b)) {
-                cout << 0;
-                return 0;
-            }
-            diff.insert(a);
-            diff.insert(b);
-        }
     }
 
     for(int i = 0; i < n; i++) {
