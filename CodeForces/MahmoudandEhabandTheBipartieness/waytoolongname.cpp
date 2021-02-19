@@ -6,10 +6,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long
-#define f first
-#define s second
-#define pii pair<int, int>
+typedef ll long long
+typedef f first
+typedef s second
+typedef pii pair<int, int>
 
 void setIO(string name = "") {
     ios_base::sync_with_stdio(0); cin.tie(0);
