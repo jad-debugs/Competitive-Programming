@@ -22,10 +22,13 @@ void setIO(string name = "") {
     */
 }
 
-bool cmp(pii a, pii b) {
-    if(a.s == b.s)
-        return a.f < b.f;
-    return a.s < b.s;
+struct interval {
+    int st, en, idx;
+};
+
+bool cmp(interval p1, interval p2)
+{
+    return p1.st < p2.st;
 }
 
 int main()
@@ -37,54 +40,44 @@ int main()
     for(int i = 1; i <= t; i++) {
         cout << "Case #" << i << ": ";
         int n; cin >> n;
-        pii org[n];
+        interval arr[n];
         for(int a = 0; a < n; a++) {
-            int c, d; 
-            cin >> c >> d;
-            org[a] = {c, d};
+            int in1, in2; 
+            cin >> in1 >> in2;
+            arr[a] = {in1, in2, a};
         }
-        pii so[n];
-        copy(org, org+n, so);
+        
+        sort(arr, arr+n, cmp);
 
-        sort(so, so+n, cmp);
+        vector<char> schedule(n);
 
-        pii j = {0, 0};
-        pii c {0, 0};
+        schedule[arr[0].idx] = 'J';
+        schedule[arr[1].idx] = 'C';
 
-        char ans[n];
+        int Jend = arr[0].en;
+        int Cend = arr[1].en;
 
-        int cur = 0;
-        int o = 0;
-
-        char curC = 'J';
-
-        int cnt = 0;
         bool imp = false;
 
-        for(int i = 0; i < n; i++) {
-            pii x = so[i];
-            if(x.f >= cur) {
-                cur = x.s;
+        for(int i = 2; i < n; i++) {
+            if(arr[i].st >= Jend) {
+                schedule[arr[i].idx] = 'J';
+                Jend = arr[i].en;
             }
-            else if (x.f >= o) {
-                o = cur;
-                cur = x.s;
-                if(curC == 'J') curC = 'C';
-                else curC = 'J';
+            else if(arr[i].st >= Cend) {
+                schedule[arr[i].idx] = 'C';
+                Cend = arr[i].en;
             }
-            else {imp = true; break;}
-            ans[cnt] = curC;
-            cnt++;
+            else {
+                imp = true;
+            }
         }
         if(imp) {
             cout << "IMPOSSIBLE\n";
             continue;
         }
-        for(auto p: org) {
-            for(int i = 0; i < n; i++) {
-                if(so[i].f == p.f && so[i].s == p.s)
-                    cout << ans[i];
-            }
+        for(int i = 0; i < n; i++) {
+            cout << schedule[i];
         }
         cout << "\n";
     }
