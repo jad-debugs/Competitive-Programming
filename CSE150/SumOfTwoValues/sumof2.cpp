@@ -7,30 +7,42 @@ using namespace std;
 
 int main()
 {
-    ll n, target;
+    int n, target;
     cin >> n >> target;
 
-    ll arr[n];
-    map<ll, ll> pos;
-    for(ll i = 0; i < n; i++) {
-        cin >> arr[i];
-        pos[arr[i]] = i;
-    }
+    map<int, int> pos;
 
-    ll l = 0, r = n-1;
+    int arr[n];
+    for(int i = 0; i < n; i++) {
+        int a; cin >> a;
+        if(pos.count(a))
+            pos[-a] = i+1;
+        else
+            pos[a] = i+1;
+        arr[i] = a;
+    }
 
     sort(arr, arr+n);
 
-    while(l != r) {
-        ll sum = arr[l] + arr[r];
-        if(sum == target) {
-            cout << ++pos[arr[l]] << " " << ++pos[arr[r]];
+    int l = 0, r = n-1;
+
+    while(l < r) {
+        int sum = arr[l] + arr[r];
+
+        if (sum < target)
+            l++;
+        else if (sum > target)
+            r--;
+        else {
+            int fr = pos[arr[l]];
+            int br = pos[arr[r]];
+            if (fr != br)
+                cout << fr << " " << br;
+            else
+                cout << fr << " " << pos[-arr[r]];
             return 0;
         }
-        else if(sum < target)
-            l++;
-        else
-            r--;
     }
     cout << "IMPOSSIBLE";
+    return 0;
 }
