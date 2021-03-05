@@ -36,10 +36,8 @@ int main()
     for (int i = n-1; i > 0; i--) {
         if (i == n-1)
             lows[i-1] = scores[i];
-        if (scores[i] > lows[i])
-            lows[i-1] = lows[i];
         else
-            lows[i-1] = scores[i];
+            lows[i-1] = min(scores[i], lows[i]);
     }
     vector<int> results; 
     float avg = 0;
