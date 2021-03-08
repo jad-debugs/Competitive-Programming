@@ -3,7 +3,7 @@
 // TASK: -----
 // LANG: C++                 
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 #define ll long long
@@ -20,15 +20,13 @@ void setIO(string name = "") {
     }   
 }
 
-
 int main()
 {
     setIO("");
 
-    int n, q; cin >> n >> q;
-    
     int forest[1002][1002];
-
+    
+    int n, q; cin >> n >> q;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             char x; cin >> x;
