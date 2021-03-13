@@ -13,7 +13,7 @@ int main()
 
     // printing out subsets
     // mask as 0 will always be off bit
-    cout << "empty subset\n"; // lol
+    cout << "empty subset\n"; // lol i wish i could put the null phi looking thing
 
     for (int mask = 1; mask < (1 << n); mask++) {
         for (int idx = 0; idx < n; idx++) {
