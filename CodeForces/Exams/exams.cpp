@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <utility>
+#include <algorithm>
 
 using namespace std;
 
@@ -31,7 +32,7 @@ int main()
     
     int curDay = 0;
     
-    pair<int, int> arr[n] = {0}; 
+    pair<int, int> arr[n]; 
     
     for (int i = 0; i < n; i++) {
         int a, b; cin >> a >> b;
