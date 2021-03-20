@@ -3,7 +3,9 @@
 // TASK: -----
 // LANG: C++                 
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <utility>
+
 using namespace std;
 
 #define ll long long
@@ -25,7 +27,29 @@ int main()
 {
     setIO("");
 
+    int n; cin >> n;
     
+    int curDay = 0;
     
+    pair<int, int> arr[n] = {0}; 
+    
+    for (int i = 0; i < n; i++) {
+        int a, b; cin >> a >> b;
+        arr[i] = {a, b};
+    }
+
+    sort(arr, arr+n);
+    
+    for (int i = 0; i < n; i++) {
+        int a = arr[i].f;
+        int b = arr[i].s;
+        if (!curDay)
+            curDay = b;
+        else if (b < curDay)
+            curDay = a;
+        else
+            curDay = b;
+    }
+    cout << curDay;
     return 0;
 }
