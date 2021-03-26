@@ -3,10 +3,7 @@
 // TASK: -----
 // LANG: C++                 
 
-#include <iostream>
-#include <utility>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 #define ll long long
@@ -29,28 +26,27 @@ int main()
     setIO("");
 
     int n; cin >> n;
-    
-    int curDay = 0;
-    
-    pair<int, int> arr[n]; 
-    
+
+    int behind = 3, ans = 0;
     for (int i = 0; i < n; i++) {
-        int a, b; cin >> a >> b;
-        arr[i] = {a, b};
+
+        int x; cin >> x;
+        if (!x || (x == behind && x != 3)) {
+            ans++;
+            behind = 0;
+        }
+        else if (x == 3)
+            behind = 3 - behind;
+        else
+            behind = x;
     }
 
-    sort(arr, arr+n);
-    
-    for (int i = 0; i < n; i++) {
-        int a = arr[i].f;
-        int b = arr[i].s;
-        if (!curDay)
-            curDay = b;
-        else if (b < curDay)
-            curDay = a;
-        else
-            curDay = b;
-    }
-    cout << curDay;
+    cout << ans;
+
     return 0;
 }
+
+/*
+100
+3 2 3 3 3 2 3 1 3 2 2 3 2 3 3 3 3 3 3 1 2 2 3 1 3 3 2 2 2 3 1 0 3 3 3 2 3 3 1 1 3 1 3 3 3 1 3 1 3 0 1 3 2 3 2 1 1 3 2 3 3 3 2 3 1 3 3 3 3 2 2 2 1 3 1 3 3 3 3 1 3 2 3 3 0 3 3 3 3 3 1 0 2 1 3 3 0 2 3 3
+*/
