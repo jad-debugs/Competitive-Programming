@@ -2,8 +2,11 @@
 // ID: jadDebugs
 // TASK: -----
 // LANG: C++                 
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <map>
+#include <cstdio>
 using namespace std;
 
 #define ll long long
@@ -11,11 +14,11 @@ using namespace std;
 #define s second
 #define pii pair<int, int>
 
-const int hi = 3e4;
+const int hi = 101;
 int n, m;
 
-map<pii, vector<pii>> graph;
-bool visited[hi][hi];
+map<pii, vector<pii> > graph;
+bool visited[hi][hi] = {0};
 bool matrix[hi][hi] = {0};
 
 int dirx[4] = {-1, 1, 0, 0};
@@ -40,53 +43,46 @@ void dfs(pii node)
 
     visited[node.f][node.s] = 1;
     for (pii u: graph[node]) {
-        matrix[u.f][u.s] = 1;
-        if (pastVisited({u.f, u.s}))
-            dfs({u.f, u.s});
+        if (!(matrix[u.f][u.s])) {
+            matrix[u.f][u.s] = 1;
+            if (pastVisited(make_pair(u.f, u.s)))
+                dfs(make_pair(u.f, u.s));
+        }
     }
     // ff
     for (int i = 0; i < 4; i++) {
         if (matrix[node.f+dirx[i]][node.s+diry[i]])
-            dfs({node.f+dirx[i], node.s+diry[i]});
+            dfs(make_pair(node.f+dirx[i], node.s+diry[i]));
     }
 }
 
-void setIO(string name = "") {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    
-    if ((int)(name).size()) {
-        freopen((name+".in").c_str(), "r", stdin);
-        freopen((name+".out").c_str(), "w", stdout);
-    }   
-}
-
-
 int main()
 {
-    setIO("lightson");
+    freopen("lightson.in", "r", stdin);
+	freopen("lightson.out", "w", stdout);
 
     cin >> n >> m;
 
     for (int i = 0; i < m; i++) {
         int x, y, a, b; cin >> x >> y >> a >> b;
         x--;y--;a--;b--;
-        graph[{x, y}].push_back({a, b});
+        graph[make_pair(x, y)].push_back(make_pair(a, b));
     }
 
     matrix[0][0] = 1;
 
-    dfs({0, 0});
+    dfs(make_pair(0, 0));
 
     int ans = 0;
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < hi; i++) {
+        for (int j = 0; j < hi; j++) {
             if (matrix[i][j]) {
                 ans++;
             }
         }
     }
-    cout << ans;
 
+    cout << ans << '\n';
     return 0;
 }
