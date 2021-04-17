@@ -15,7 +15,7 @@ int MX = 0;
 
 bool cmp(string a, string b)
 {
-    return a +b < b + a;
+    return a + b < b + a;
 }
 
 void setIO(string name = "") {
