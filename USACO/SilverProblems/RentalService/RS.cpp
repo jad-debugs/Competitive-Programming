@@ -1,18 +1,20 @@
+// Author : Jad Isaac
+// ID: jadDebugs
+// TASK: -----
+// LANG: C++                 
+
 #include <bits/stdc++.h>
 using namespace std;
 
-struct sellMilk {
-    long long f, s;
-};
+#define ll long long
+#define f first
+#define s second
+#define pii pair<int, int>
 
-bool cmpInt(int a, int b)
+bool cmp(pii a, pii b)
 {
-    return a > b;
-}
-
-bool cmpSM(sellMilk a, sellMilk b)
-{
-    if(a.s == b.s) return a.f > b.f;
+    if (a.s == b.s)
+        return a.f > b.f;
     return a.s > b.s;
 }
 
@@ -22,64 +24,61 @@ void setIO(string name = "") {
     if ((int)(name).size()) {
         freopen((name+".in").c_str(), "r", stdin);
         freopen((name+".out").c_str(), "w", stdout);
-    }
+    }   
 }
+
 
 int main()
 {
     setIO("rental");
-    long long n, m, r;
-    cin >> n >> m >> r;
 
-    long long cows[n], prices[r];
-    sellMilk milkSales[m];
+    int n, m, r; cin >> n >> m >> r;
 
-    for(long long i = 0; i < n; i++)
-        cin >> cows[i];
+    vector<int> gallons(n);
+    for (int i = 0; i < n; i++)
+        cin >> gallons[i];
+    sort(gallons.begin(), gallons.end(), greater<int>());
+    vector<pii> rent(m);
 
-    for(long long i = 0; i < m; i++) {
-        long long a, b; cin >> a >> b;
-        milkSales[i] = {a, b};
-    }
+    for (int i = 0; i < m; i++)
+        cin >> rent[i].f >> rent[i].s;
+    sort(rent.begin(), rent.end(), cmp);
 
-    for(long long i = 0; i < r; i++)
-        cin >> prices[i];
+    vector<int> sell(r);
+    for (int i = 0; i < r; i++)
+        cin >> sell[i];
+    sort(sell.begin(), sell.end());
 
-    sort(cows, cows + n, cmpInt);
-    sort(prices, prices + r, cmpInt);
-    sort(milkSales, milkSales + m, cmpSM);
+    int firstSell = r - n;
 
+    int cur = 0;
+    ll ans = 0;
 
-    long long curmilk = 0;
-    long long ans = 0;
-    for(long long a = 0; a < n; a++) {
-        long long cow = cows[a];
-        long long mc = 0, sc = 0;
-        // sell
-        while(true) {
-            long long f = milkSales[curmilk].f;
-            long long s = milkSales[curmilk].s;
-            if (cow < f) {milkSales[curmilk].f -= cow; mc += cow*s; break;}
-
-            else if (cow > f) {
-                cow -= f;
-                curmilk++;
-                mc += f*s;
-            }
-            else if (cow == f) {curmilk++; mc += f*s; break;}
+    for (int i = 0; i < n; i++) {
+        ll soldPrice = 0;
+        if (firstSell >= 0)
+            soldPrice = sell[firstSell];
+        firstSell++;
+        ll rentPrice = 0;
+        while (cur < m) {
+            int tmp = min(gallons[i], rent[cur].f);
+            rentPrice += rent[cur].s*tmp;
+            gallons[i] -= tmp;
+            rent[cur].f -= tmp;
+            if (gallons[i] <= 0)
+                break;
+            else
+                cur++;
         }
-        // price
-        if(n-a < r) {sc = prices[n-a-1];}
+        ans += max(soldPrice, rentPrice);
 
-        bool done = false;
-
-        if(sc >= mc) {
-            done = true;
-            for(long long b = 0; b <= n-a-1; b++) ans += prices[b];
+        if (soldPrice > rentPrice) {
+            for (; firstSell < r; firstSell++)
+                ans += sell[firstSell];
             break;
         }
-        if(!done) ans += mc;
     }
-    cout << ans; 
+
+    cout << ans;
     return 0;
 }
