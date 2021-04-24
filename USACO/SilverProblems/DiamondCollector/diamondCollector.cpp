@@ -12,7 +12,7 @@ using namespace std;
 #define pii pair<int, int>
 
 void setIO(string name = "") {
-    //ios_base::sync_with_stdio(0); cin.tie(0);
+    ios_base::sync_with_stdio(0); cin.tie(0);
     
     if ((int)(name).size()) {
         freopen((name+".in").c_str(), "r", stdin);
