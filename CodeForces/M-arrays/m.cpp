@@ -13,17 +13,18 @@ int main()
             map[a%mod]++;
         }
         int ans = (map[0] > 0 ? 1: 0);
+        map[0] = 0;
         for (auto pii: map) {
-            if (pii.first == 0)
+            if (pii.second == 0)
                 continue;
-            else if (abs(pii.second - map[mod - pii.second]) <= 1)
+            else if (abs(pii.second - map[mod - pii.first]) <= 1)
                 ans++;
             else {
-                ans += abs(pii.second - map[m - pii.first]);
+                ans += abs(pii.second - map[mod - pii.first]);
             }
-            map[m-pii.first] = 0;
+            map[mod-pii.first] = 0;
         }
-        map.erase(map.find(m - pii.first));
+        cout << ans << '\n';
     }
     return 0;
 }
