@@ -11,10 +11,11 @@ using namespace std;
 #define s second
 #define pii pair<int, int>
 
+const int hi = 1e5+5;
+
 void setIO(string name = "") {
     ios_base::sync_with_stdio(0); cin.tie(0);
 }
-
 
 int main()
 {
@@ -22,19 +23,24 @@ int main()
 
     int n; cin >> n;
 
-    vector<int> g(n);
+    vector<int> g(hi);
 
     for (int i = 0; i < n-1; i++) {
         int a, b; cin >> a >> b;
-        g[a-1]++;
+        a--;
+        g[a]++;
     }
 
     int ans = n-1;
 
-    for (int x: g) {
-        if (x == 0)
-            continue;
-        ans += ceil(log2((double)x));
+    for (int i = 0; i < n; i++) {
+        int x = g[i];
+
+        int tmp = 0, p = 1;
+        while (p < x+1)
+            tmp++, p *= 2;
+        
+        ans += tmp;
     }
 
     cout << ans;
