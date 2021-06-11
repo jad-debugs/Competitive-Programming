@@ -21,12 +21,12 @@ string dir;
 
 bool solve(ll days)
 {
-    int div = days/n;
+    ll div = days/n;
 
-    int up = div*countDir['U'];
-    int down = div*countDir['D'];
-    int left = div*countDir['L'];
-    int right = div*countDir['R'];
+    ll up = div*countDir['U'];
+    ll down = div*countDir['D'];
+    ll left = div*countDir['L'];
+    ll right = div*countDir['R'];
 
     for (int i = 0; i < days%n; i++) {
         if (dir[i] == 'U')
@@ -39,19 +39,11 @@ bool solve(ll days)
             right++;
     }
 
-    int offsetX = x2 - x1;
-    int offsetY = y2 - y1;
+    ll offsetX = right - left + x1;
+    ll offsetY = up - down + y1;
 
-    if (x2 > x1)
-        offsetX += -right + left;
-    else
-        offsetX += right - left;
-    if (y2 > y1)
-        offsetY += -up + down;
-    else
-        offsetY += up - down;
 
-    if (abs(offsetY) + abs(offsetX) <= days)
+    if (abs(offsetY - y2) + abs(offsetX - x2) <= days)
         return true;
     return false;
 }
@@ -72,12 +64,12 @@ int main()
     for (int i = 0; i < n; i++)
         countDir[dir[i]]++;
 
-    ll lo = 0, hi = 1e18;
-
     if (!solve(1e18)) {
         cout << -1;
         return 0;
     }
+
+    ll lo = 0, hi = 1e18;
 
     while (lo < hi) {
         ll mid = lo + (hi - lo)/2;
@@ -88,7 +80,14 @@ int main()
             lo = mid+1;
     }
 
-    cout << hi;
+    cout << lo;
 
     return 0;
 }
+
+/*
+0 3
+0 0
+3
+UDD
+*/
