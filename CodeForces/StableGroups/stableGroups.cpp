@@ -20,19 +20,20 @@ int main()
 {
     setIO("");
 
-    int n, k, x; cin >> n >> k >> x;
+    int n;
+    ll k, x; cin >> n >> k >> x;
 
-    vector<int> arr(n);
+    vector<ll> arr(n);
 
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 
     sort(arr.begin(), arr.end());
 
-    vector<int> diff;
+    vector<ll> diff;
 
     for (int i = 1; i < n; i++) {
-        int d = arr[i] - arr[i-1];
+        ll d = arr[i] - arr[i-1];
         if (d <= x)
             continue;
         diff.push_back(d);
@@ -40,13 +41,13 @@ int main()
 
     sort(diff.begin(), diff.end());
 
-    int ans = diff.size();
+    int ans = diff.size()+1;
 
     int i = 0;
     while (k > 0 && i < (int)diff.size()) {
-        int rm = diff[i]/x - 1;
+        ll rm = ceil((long double)diff[i]/x) - 1;
         if (k - rm >= 0) {
-            ans -= rm;
+            ans--;
             k -= rm;
         }
         i++;
