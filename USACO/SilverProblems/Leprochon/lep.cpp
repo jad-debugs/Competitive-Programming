@@ -40,7 +40,7 @@ int diag1(int r, int c)
     int res = -mx, sum = 0;
 
     for (int i = 0; i < n; i++) {
-        sum += matrix[(r+1)%n][(c+i)%n];
+        sum += matrix[(r+i)%n][(c+i)%n];
         res = max(res, sum);
     }
 
@@ -51,7 +51,7 @@ int diag2(int r, int c)
     int res = -mx, sum = 0;
 
     for (int i = 0; i < n; i++) {
-        sum += matrix[(r+1)%n][(c-i+n)%n];
+        sum += matrix[(r+i)%n][(c-i+n)%n];
         res = max(res, sum);
     }
 
