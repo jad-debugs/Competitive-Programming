@@ -27,13 +27,15 @@ int main()
 
     int ans = 0;
 
+    for (int i = 0; i < n; i++)
+        cout << cows[i].s << ' ';
+
     // accounting for continuous letter
-    for (int i = 1; i <= n; i++) {
-        int len = 1;
-        while (i+len <= n && cows[i+len].f == cows[i].f)
-            len++;
-        ans = max(ans, cows[len + i-1].f - cows[i].f);
-        i += len-1;
+    for (int i = 1, j = 1; i <= n && j <= n; ) {
+        while (j <= n && cows[j].s == cows[i].s)
+            j++;
+        ans = max(cows[j-1].f-cows[i].f, ans);
+        i = j;
     }
 
     for (int i = 1; i <= n; i++) {
