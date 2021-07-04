@@ -1,12 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define ll long long
 #define f first
 #define s second
 
+const ll inf = 1e15;
+
 int main()
 {
-    int n, a, b; cin >> n >> a >> b;
+    int n;
+    ll a, b; cin >> n >> a >> b;
 
     vector<pair<int, bool>> cows(n, {0, false});
 
@@ -17,42 +21,35 @@ int main()
         else
             cows[i].s = 0;
         cin >> cows[i].f;
-        cows[i].f *= 2;
     }
+
+    cows.push_back({-inf, 0});
+    cows.push_back({inf, 0});
 
     sort(cows.begin(), cows.end());
 
-    int ans = 0;
+    ll ans = 0;
 
-    for (int i = a; i <= b; i++) {
-        auto frP = upper_bound(cows.begin(), cows.end(), make_pair(i*2, false));
-        vector<pair<int, bool>>::iterator brP;
+    for (int i = 0; i < n+1; i++) {
+        ll fr = cows[i].f;
+        ll br = cows[i+1].f;
+        ll mid = (fr+br)/2;
 
-        if (frP == cows.begin())
-            brP = cows.end();
-        else
-            brP = prev(frP);
-
-        if (brP == cows.end()) {
-            if (frP->s)
-                ans++;
+        if (cows[i].s) {
+            ll start = max(a, fr+1);
+            ll end = min(b, mid);
+            ans += max(0LL, end-start+1);
         }
-        else if (frP == cows.end()) {
-            if (brP->s) {
-                ans++;
-            }
+        if (cows[i+1].s) {
+            ll start = max(a, mid+1);
+            ll end = min(b, br);
+            ans += max(0LL, end-start+1);
         }
-        else {
-            int mid = (frP->f + brP->f)/2;
-            if (i*2 > mid)
-                ans += (frP->s ? 1: 0);
-            else if (i*2 < mid)
-                ans += (brP->s ? 1: 0);
-            else if (frP->s || brP->s) {
-                ans++;
-            }
-        }
+        // in middle
+        if (!cows[i].s && cows[i+1].s && (fr%2) == (br%2) && a <= mid && mid <= b)
+            ans++;
     }
+
     cout << ans;
 
     return 0;
