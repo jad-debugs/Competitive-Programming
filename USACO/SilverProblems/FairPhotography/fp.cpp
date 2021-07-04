@@ -27,9 +27,6 @@ int main()
 
     int ans = 0;
 
-    for (int i = 0; i < n; i++)
-        cout << cows[i].s << ' ';
-
     // accounting for continuous letter
     for (int i = 1, j = 1; i <= n && j <= n; ) {
         while (j <= n && cows[j].s == cows[i].s)
