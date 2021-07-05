@@ -14,7 +14,7 @@ struct point
 bool cmp(point a, point b)
 {
     if (a.x == b.x)
-        return a.isLeft;
+        return (a.isLeft != b.isLeft);
     return a.x < b.x;
 }
 
@@ -30,21 +30,30 @@ int main()
         points.push_back({b, i, 0});
     }
 
-    sort(begin(points), end(points));
+    sort(begin(points), end(points), cmp);
 
-    int alone[n] = {0}, total = 0, endpoint = 0;
+    int alone[n] = {0}, total = 0, endpoint = points[0].x;
     set<int> s;
 
     for (point p: points) {
         if ((int)s.size() == 1)
             alone[*s.begin()] += p.x - endpoint;
-        if ((int)s.size())
+        if (!s.empty())
             total += p.x - endpoint;
         if (p.isLeft)
             s.insert(p.id);
         else
             s.erase(p.id);
+        endpoint = p.x;
     }
+
+    int tmpT = total;
+
+    for (int i = 0; i < n; i++) {
+        total = min(total, tmpT - alone[i]);
+    }
+
+    cout << total;
 
     return 0;
 }
