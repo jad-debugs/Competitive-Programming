@@ -32,7 +32,8 @@ int main()
 
     sort(begin(points), end(points), cmp);
 
-    int alone[n] = {0}, total = 0, endpoint = points[0].x;
+    int total = 0, endpoint = points[0].x;
+    vector<int> alone(n);
     set<int> s;
 
     for (point p: points) {
@@ -47,13 +48,12 @@ int main()
         endpoint = p.x;
     }
 
-    int tmpT = total;
-
+    int timeLost = 2e9;
     for (int i = 0; i < n; i++) {
-        total = min(total, tmpT - alone[i]);
+        timeLost = min(alone[i], timeLost);
     }
 
-    cout << total;
+    cout << total - timeLost;
 
     return 0;
 }
