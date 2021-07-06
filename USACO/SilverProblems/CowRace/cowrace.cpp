@@ -45,7 +45,6 @@ int main()
         elsieDistance += timeRan*speedE;
 
         prevTime = x;
-        cout << endl;
 
         if (bessDistance > elsieDistance) {
             if (bessWin == -1) {
