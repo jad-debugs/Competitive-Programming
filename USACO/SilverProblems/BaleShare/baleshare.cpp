@@ -15,6 +15,7 @@ void go(int i)
     if (i >= n) {
         int maxVal = max(a, max(b, c));
         res = min(res, maxVal);
+        return;
     }
     // bales[i] goes to A
     if (!dp[a+bales[i]][b][i] && a + bales[i] < res) {
