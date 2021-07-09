@@ -20,7 +20,7 @@ char go(int i)
         return go(i - (prelen+midlen));
     if (i == prelen+1)
         return 'm';
-    return 'O';
+    return 'o';
 }
 
 int main()
