@@ -20,6 +20,9 @@ bool check(int r, int c)
     bool ok = false;
     if (r-2 < 0)
         ok = true;
+    if (r-1 >= 0 && c-1 >= 0 && grid[r-1][c-1]-1 > 0) {
+        return false;
+    }
     if (!ok) {
         ok = 1;
         for (int i = 0; i < m; i++) {
@@ -40,13 +43,14 @@ bool check(int r, int c)
         if (grid[r2][c2]-1 <= -1)
             return false;
     }
+
     return true;
 }
 
 bool lastCheck()
 {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
+    for (int i = n-1; i >= 0; i--) {
+        for (int j = m-1; j >= 0; j--) {
             if (grid[i][j] >= 1)
                 return false;
         }
@@ -67,7 +71,6 @@ void go(int pos)
                 }
             }
         }
-        
         return;
     }
     int r = pos/m;
@@ -120,3 +123,4 @@ int main()
 
     return 0;
 }
+
