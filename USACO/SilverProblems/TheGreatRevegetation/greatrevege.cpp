@@ -58,8 +58,6 @@ int main()
         }        
     }
 
-    ans++;
-
     for (int i = 1; i <= n; i++) {
         if (type[i] == 0) {
             dfs(i, 1);
@@ -68,7 +66,7 @@ int main()
     }
 
     if (!works) {
-        cout << "-1\n";
+        cout << "0\n";
     }
     else {
         cout << 1;
