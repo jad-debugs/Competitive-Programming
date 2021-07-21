@@ -11,7 +11,7 @@ int dy[9] = {1, -1, -1, 1, 0, 0, 1, -1, 0};
 
 int cnt = 0, k, n, m; 
 bool found = 0;
-char grid[31][31] = {0};
+int grid[31][31] = {0};
 vector<bool> mines(31*31);
 
 bool check(int r, int c)
@@ -20,6 +20,9 @@ bool check(int r, int c)
     bool ok = false;
     if (r-2 < 0)
         ok = true;
+    if (r-1 >= 0 && c-1 >= 0 && grid[r-1][c-1]-1 > 0) {
+        return false;
+    }
     if (!ok) {
         ok = 1;
         for (int i = 0; i < m; i++) {
@@ -40,15 +43,34 @@ bool check(int r, int c)
         if (grid[r2][c2]-1 <= -1)
             return false;
     }
+
+    return true;
+}
+
+bool lastCheck()
+{
+    for (int i = n-1; i >= 0; i--) {
+        for (int j = m-1; j >= 0; j--) {
+            if (grid[i][j] >= 1)
+                return false;
+        }
+    }
     return true;
 }
 
 void go(int pos)
 {
-    if (found)
+    if (found || pos > n*m)
         return;
     if (cnt == k) {
-        found = 1;
+        found = lastCheck();
+        if (found) {
+            for (int i = 0; i < n*m; i++) {
+                if (mines[i]) {
+                    cout << i/m+1 << ' ' << i%m+1 << '\n';
+                }
+            }
+        }
         return;
     }
     int r = pos/m;
@@ -76,13 +98,11 @@ void go(int pos)
                 continue;
             grid[r2][c2]++;
         }
-        
+
         cnt--;
     }
-    else {
-        mines[pos] = 0;
-        go(pos+1);
-    }
+    mines[pos] = 0;
+    go(pos+1);
 }
 
 int main()
@@ -97,15 +117,10 @@ int main()
 
     go(0);
 
-    for (int i = 0; i < n*m; i++) {
-        if (mines[i]) {
-            cout << i/m+1 << ' ' << i%m+1 << '\n';
-        }
-    }
-
     if (!found) {
         cout << "NO SOLUTION!";
     }
 
     return 0;
 }
+
